@@ -113,7 +113,10 @@ def queryAbuseIpDb(key, query):
         )
         is not True
     ):
-        query = dns.resolver.resolve(query, "A")
+        try:
+            query = dns.resolver.resolve(query, "A")
+        except dns.resolver.NoAnswer:
+            return None
 
     try:
         response = requests.get(
